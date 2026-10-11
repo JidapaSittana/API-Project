@@ -30,7 +30,7 @@ app.use(express.json({ limit: "10kb" }));
 
 // ---> ส่วนที่ 2: ตั้งค่า Endpoint สำหรับดู Docs <---
 // สมมติว่าไฟล์ openapi.yaml อยู่โฟลเดอร์นอกสุด (ข้างนอกโฟลเดอร์ src)
-const swaggerDocument = YAML.load(path.join(__dirname, "./openapi.yaml"));
+const swaggerDocument = YAML.load(path.join(__dirname, "../openapi.yaml"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // ---------------------------------------------
 
