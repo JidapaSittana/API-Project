@@ -176,3 +176,34 @@ paths:
       responses:
         "200":
           description: สำเร็จ
+
+  /books/{id}/enrichment:
+    get:
+      summary: ดึงข้อมูลหน้าปก
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: รหัสหนังสือ
+      responses:
+        "200":
+          description: สำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      bookId:
+                        type: integer
+                      enrichment:
+                        type: object
+                        properties:
+                          coverUrl:
+                            type: string
+                          synopsis:
+                            type: string
