@@ -1,0 +1,178 @@
+openapi: 3.0.0
+info:
+  title: My Project API
+  version: 1.0.0
+  description: API documentation for Phase 2
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development Server
+
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "Node.js REST API Design"
+        author:
+          type: string
+          example: "สมชาย ใจดี"
+        isbn:
+          type: string
+          example: "978-1-123456-01-0"
+        price:
+          type: number
+          example: 350.00
+        publisherId:
+          type: integer
+          example: 1
+        categoryIds:
+          type: array
+          items:
+            type: integer
+          example: [101, 102]
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "VALIDATION_ERROR"
+            message:
+              type: string
+              example: "ข้อความอธิบายข้อผิดพลาด"
+
+paths:
+  /books:
+    get:
+      summary: ดึงรายชื่อหนังสือทั้งหมด
+      description: ดึงข้อมูลหนังสือ สามารถกรองตามหมวดหมู่ได้
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: ชื่อหรือรหัสหมวดหมู่ (เช่น TECH)
+      responses:
+        "200":
+          description: สำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "สำเร็จ"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Book"
+    post:
+      summary: เพิ่มหนังสือใหม่
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+      responses:
+        "201":
+          description: เพิ่มข้อมูลสำเร็จ
+        "400":
+          description: ข้อมูลไม่ครบถ้วน (VALIDATION_ERROR)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: ISBN ซ้ำ (DUPLICATE_ISBN)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /books/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: รหัสหนังสือ
+    get:
+      summary: ดึงข้อมูลหนังสือตาม ID
+      parameters:
+        - in: query
+          name: include
+          schema:
+            type: string
+          description: ดึงข้อมูลที่เกี่ยวข้อง เช่น publisher,categories
+      responses:
+        "200":
+          description: สำเร็จ
+        "404":
+          description: ไม่พบข้อมูลหนังสือ (NOT_FOUND)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      summary: แก้ไขข้อมูลหนังสือทั้งระเบียน
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+      responses:
+        "200":
+          description: แก้ไขข้อมูลสำเร็จ
+        "400":
+          description: ข้อมูลไม่ครบถ้วน
+        "404":
+          description: ไม่พบข้อมูลหนังสือ
+    patch:
+      summary: แก้ไขข้อมูลหนังสือเฉพาะบางส่วน
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: number
+                  example: 299.00
+      responses:
+        "200":
+          description: แก้ไขข้อมูลสำเร็จ
+        "404":
+          description: ไม่พบข้อมูลหนังสือ
+    delete:
+      summary: ลบข้อมูลหนังสือ
+      responses:
+        "200":
+          description: ลบข้อมูลสำเร็จ
+        "404":
+          description: ไม่พบข้อมูลหนังสือ
+
+  /categories:
+    get:
+      summary: ดึงรายชื่อหมวดหมู่ทั้งหมด
+      responses:
+        "200":
+          description: สำเร็จ
+
+  /publishers:
+    get:
+      summary: ดึงรายชื่อสำนักพิมพ์ทั้งหมด
+      responses:
+        "200":
+          description: สำเร็จ
