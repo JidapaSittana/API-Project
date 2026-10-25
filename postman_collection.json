@@ -1,0 +1,348 @@
+{
+  "info": {
+    "_postman_id": "c05d33f4-2c99-497a-9d53-68a2b6af6daa",
+    "name": "postman_collection",
+    "description": "postman_collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56436173",
+    "_collection_link": "https://go.postman.co/collection/56436173-c05d33f4-2c99-497a-9d53-68a2b6af6daa?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. ดึงข้อมูลหนังสือ",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books",
+          "host": ["{{baseUrl}}"],
+          "path": ["books"]
+        }
+      },
+      "response": [
+        {
+          "name": "1. ดึงข้อมูลหนังสือ",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"สำเร็จ\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Clean Code\",\n            \"author\": \"Robert C. Martin\",\n            \"isbn\": \"9780132350884\",\n            \"price\": 350,\n            \"publisherId\": 1,\n            \"categoryIds\": [101, 102]\n        },\n        {\n            \"id\": 2,\n            \"title\": \"Basic Database & SQL\",\n            \"author\": \"สมหญิง รักเรียน\",\n            \"isbn\": \"978-1-123456-02-7\",\n            \"price\": 280,\n            \"publisherId\": 2,\n            \"categoryIds\": [101]\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "2. ดึงข้อมูลหนังสือตาม ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "1"]
+        }
+      },
+      "response": [
+        {
+          "name": "2. ดึงข้อมูลหนังสือตาม ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "1"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"สำเร็จ\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Clean Code\",\n        \"author\": \"Robert C. Martin\",\n        \"isbn\": \"9780132350884\",\n        \"price\": 350,\n        \"publisherId\": 1,\n        \"categoryIds\": [101, 102],\n        \"coverImage\": \"https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "3. เพิ่มหนังสือใหม่",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Node.js REST API Design\",\n    \"author\": \"สมชาย ใจดี\",\n    \"isbn\": \"978-1-123456-01-0\",\n    \"price\": 450,\n    \"publisherId\": 1,\n    \"categoryIds\": [101]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/books",
+          "host": ["{{baseUrl}}"],
+          "path": ["books"]
+        }
+      },
+      "response": [
+        {
+          "name": "3. เพิ่มหนังสือใหม่",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Node.js REST API Design\",\n    \"author\": \"สมชาย ใจดี\",\n    \"isbn\": \"978-1-123456-01-0\",\n    \"price\": 450,\n    \"publisherId\": 1,\n    \"categoryIds\": [101]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"เพิ่มข้อมูลสำเร็จ\",\n    \"data\": {\n        \"id\": 3,\n        \"title\": \"Node.js REST API Design\",\n        \"author\": \"สมชาย ใจดี\",\n        \"isbn\": \"978-1-123456-01-0\",\n        \"price\": 450,\n        \"publisherId\": 1,\n        \"categoryIds\": [\n            101\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "4. แก้ไขข้อมูลหนังสือทั้งหมด",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Clean Code (Revised Edition)\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350884\",\n    \"price\": 399,\n    \"publisherId\": 1,\n    \"categoryIds\": [101, 102]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/books/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "1"]
+        }
+      },
+      "response": [
+        {
+          "name": "4. แก้ไขข้อมูลหนังสือทั้งหมด",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Clean Code (Revised Edition)\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350884\",\n    \"price\": 399,\n    \"publisherId\": 1,\n    \"categoryIds\": [101, 102]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "1"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"แก้ไขข้อมูลสำเร็จ\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Clean Code (Revised Edition)\",\n        \"author\": \"Robert C. Martin\",\n        \"isbn\": \"9780132350884\",\n        \"price\": 399,\n        \"publisherId\": 1,\n        \"categoryIds\": [\n            101,\n            102\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "5. แก้ไขข้อมูลหนังสือบางส่วน",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"price\": 299\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/books/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "1"]
+        }
+      },
+      "response": [
+        {
+          "name": "5. แก้ไขข้อมูลหนังสือบางส่วน",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"price\": 299\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "1"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"แก้ไขข้อมูลสำเร็จ\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Clean Code\",\n        \"author\": \"Robert C. Martin\",\n        \"isbn\": \"9780132350884\",\n        \"price\": 299,\n        \"publisherId\": 1,\n        \"categoryIds\": [\n            101,\n            102\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "6. ลบข้อมูลหนังสือ",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "1"]
+        }
+      },
+      "response": [
+        {
+          "name": "6. ลบข้อมูลหนังสือ",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "1"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"ลบข้อมูลสำเร็จ\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "7. ดึงรายชื่อหมวดหมู่ทั้งหมด",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/categories",
+          "host": ["{{baseUrl}}"],
+          "path": ["categories"]
+        }
+      },
+      "response": [
+        {
+          "name": "7. ดึงรายชื่อหมวดหมู่ทั้งหมด",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"สำเร็จ\",\n    \"data\": [\n        {\n            \"id\": 101,\n            \"categoryCode\": \"TECH\",\n            \"categoryName\": \"เทคโนโลยี\"\n        },\n        {\n            \"id\": 102,\n            \"categoryCode\": \"NOVEL\",\n            \"categoryName\": \"นวนิยาย\"\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "8. ดึงรายชื่อสำนักพิมพ์ทั้งหมด",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/publishers",
+          "host": ["{{baseUrl}}"],
+          "path": ["publishers"]
+        }
+      },
+      "response": [
+        {
+          "name": "8. ดึงรายชื่อสำนักพิมพ์ทั้งหมด",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"message\": \"สำเร็จ\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"publisherName\": \"SE-ED Publishing\",\n            \"contactEmail\": \"contact@se-ed.com\"\n        },\n        {\n            \"id\": 2,\n            \"publisherName\": \"Chula Press\",\n            \"contactEmail\": \"press@chula.ac.th\"\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "9. ดึงข้อมูลหน้าปก",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/1/enrichment",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "1", "enrichment"]
+        }
+      },
+      "response": [
+        {
+          "name": "9. ดึงข้อมูลหน้าปก",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books/1/enrichment",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "1", "enrichment"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\n    \"data\": {\n        \"bookId\": 1,\n        \"enrichment\": {\n            \"coverUrl\": \"https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg\",\n            \"synopsis\": \"Description from OpenLibrary API...\"\n        }\n    }\n}"
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1"
+    }
+  ]
+}

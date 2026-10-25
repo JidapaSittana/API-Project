@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ระบบบริหารจัดการหนังสือดิจิทัล</title>
+
+    <!-- Google Fonts: Sarabun -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* กำหนดฟอนต์ Sarabun ให้ทุก Element บนหน้าเว็บ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        font-family:
+          "Sarabun",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif !important;
+      }
+
+      body {
+        background: #f8fafc;
+        margin: 0;
+        padding: 30px 20px;
+        color: #334155;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      h1 {
+        color: #0f172a;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      h2 {
+        color: #1e293b;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 16px;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 8px;
+      }
+      .card {
+        background: white;
+        padding: 24px;
+        border-radius: 10px;
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        margin-bottom: 24px;
+        border: 1px solid #e2e8f0;
+      }
+      /* จัดโครงสร้างฟอร์มแบ่งเป็น 2 คอลัมน์ */
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .form-group.full-width {
+        grid-column: span 2;
+      }
+      label {
+        font-size: 14px;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #475569;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: #fff;
+        color: #1e293b;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+      .btn-submit {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 16px;
+        transition: background-color 0.2s;
+      }
+      .btn-submit:hover {
+        background-color: #1d4ed8;
+      }
+      .btn-cancel {
+        background: #e2e8f0;
+        color: #475569;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        margin-right: 8px;
+        transition: background-color 0.2s;
+      }
+      .btn-cancel:hover {
+        background-color: #cbd5e1;
+      }
+      button.btn-warning {
+        background: #f59e0b;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        margin-right: 4px;
+        transition: background-color 0.2s;
+      }
+      button.btn-warning:hover {
+        background-color: #d97706;
+      }
+      button.btn-danger {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+      }
+      button.btn-danger:hover {
+        background-color: #dc2626;
+      }
+      .alert {
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        display: none;
+        font-size: 14px;
+      }
+      .alert-success {
+        background: #dcfce7;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
+      .alert-error {
+        background: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+      }
+      .status-text {
+        color: #64748b;
+        font-size: 13px;
+        margin-top: 10px;
+      }
+      .table-responsive {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+        font-size: 14px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      th {
+        background: #f8fafc;
+        color: #475569;
+        font-weight: 600;
+      }
+      tbody tr:hover {
+        background-color: #f8fafc;
+      }
+      .text-center {
+        text-align: center;
+      }
+
+      /* Modal Popup Style */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(2px);
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-content {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+      }
+      .close-btn {
+        font-size: 24px;
+        cursor: pointer;
+        color: #94a3b8;
+        line-height: 1;
+      }
+      .close-btn:hover {
+        color: #0f172a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📚 ระบบบริหารจัดการหนังสือดิจิทัล</h1>
+
+      <!-- กล่องแจ้งเตือน Alert -->
+      <div id="alert-box" class="alert"></div>
+
+      <!-- ฟอร์มเพิ่มหนังสือ (POST) -->
+      <div class="card">
+        <h2>เพิ่มหนังสือใหม่เข้าสู่ระบบ</h2>
+        <form id="add-book-form">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="title">ชื่อหนังสือ *</label>
+              <input
+                type="text"
+                id="title"
+                placeholder="เช่น Node.js REST API Design"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="author">ผู้แต่ง *</label>
+              <input
+                type="text"
+                id="author"
+                placeholder="เช่น สมชาย ใจดี"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="isbn">รหัส ISBN *</label>
+              <input
+                type="text"
+                id="isbn"
+                placeholder="เช่น 978-1-123456-01-0"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="price">ราคา (บาท) *</label>
+              <input
+                type="number"
+                id="price"
+                step="0.01"
+                placeholder="เช่น 350.00"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="publisherId">สำนักพิมพ์ *</label>
+              <select id="publisherId" required>
+                <option value="">-- กรุณาเลือกสำนักพิมพ์ --</option>
+                <option value="1">SE-ED Publishing (ID: 1)</option>
+                <option value="2">Chula Press (ID: 2)</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="categoryId">หมวดหมู่หนังสือ *</label>
+              <select id="categoryId" required>
+                <option value="">-- กรุณาเลือกหมวดหมู่ --</option>
+                <option value="1">เทคโนโลยี / คอมพิวเตอร์ (ID: 1)</option>
+                <option value="2">ทั่วไป (ID: 2)</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit">เพิ่มหนังสือ</button>
+        </form>
+      </div>
+
+      <!-- รายการหนังสือ (GET & DELETE) -->
+      <div class="card">
+        <h2>รายการหนังสือทั้งหมด</h2>
+        <div id="status" class="status-text"></div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 60px">ลำดับ</th>
+                <th>ชื่อหนังสือ</th>
+                <th>ผู้แต่ง</th>
+                <th>ISBN</th>
+                <th>ราคา</th>
+                <th style="width: 130px" class="text-center">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="book-list"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal สำหรับแก้ไขข้อมูลหนังสือ -->
+    <div id="edit-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 style="margin: 0; border: none; padding: 0">
+            ✏️ แก้ไขข้อมูลหนังสือ
+          </h2>
+          <span class="close-btn" onclick="closeEditModal()">&times;</span>
+        </div>
+        <form id="edit-book-form">
+          <input type="hidden" id="edit-id" />
+
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="edit-title">ชื่อหนังสือ *</label>
+              <input type="text" id="edit-title" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-author">ผู้แต่ง *</label>
+              <input type="text" id="edit-author" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-isbn">รหัส ISBN *</label>
+              <input type="text" id="edit-isbn" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-price">ราคา (บาท) *</label>
+              <input type="number" id="edit-price" step="0.01" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-publisherId">สำนักพิมพ์ *</label>
+              <select id="edit-publisherId" required>
+                <option value="">-- กรุณาเลือกสำนักพิมพ์ --</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="edit-categoryId">หมวดหมู่หนังสือ *</label>
+              <select id="edit-categoryId" required>
+                <option value="">-- กรุณาเลือกหมวดหมู่ --</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; text-align: right">
+            <button type="button" class="btn-cancel" onclick="closeEditModal()">
+              ยกเลิก
+            </button>
+            <button type="submit" class="btn-submit" style="margin-top: 0">
+              บันทึกการแก้ไข
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
